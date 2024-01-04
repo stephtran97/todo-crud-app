@@ -201,7 +201,7 @@ input:focus {
   font-size: 3rem;
   font-weight: 600;
   white-space: pre;
-  line-height: 3rem;
+  line-height: 3.5rem;
   letter-spacing: 0px;
   border-right: 2px solid;
   overflow: hidden;
@@ -234,7 +234,7 @@ input:focus {
     width: 0;
   }
   100% {
-    width: 240px;
+    width: 14rem;
   }
 }
 @keyframes animated-cursor {

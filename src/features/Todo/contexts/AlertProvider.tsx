@@ -21,10 +21,8 @@ const AlertProvider = (props: any): JSX.Element => {
         const alertKey = `alertShown_${todo.id}`;
         if (needAlert) {
           // Show alert only once per session
-          // eslint-disable-next-line
           if (!localStorage.getItem(alertKey)) {
             alert(
-              // eslint-disable-next-line
               `The todo task: ${todo.content!.toUpperCase()} is about to be expired.`
             );
             localStorage.setItem(alertKey, 'true');
@@ -32,7 +30,6 @@ const AlertProvider = (props: any): JSX.Element => {
           } else {
             document.getElementById(`${todo.id}`)?.classList.remove('hidden'); // Display alert icon
           }
-          // eslint-disable-next-line
         } else if (localStorage.getItem(alertKey)) {
           localStorage.setItem(alertKey, '');
           document.getElementById(`${todo.id}`)?.classList.add('hidden'); // Hide alert icon
