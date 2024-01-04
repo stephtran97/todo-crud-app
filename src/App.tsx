@@ -6,20 +6,23 @@ import TodoProvider from './features/Todo/contexts/TodoProvider';
 import AlertProvider from './features/Todo/contexts/AlertProvider';
 import ModalProvider from './features/Todo/contexts/ModalProvider';
 import LoadingProvider from './features/Todo/contexts/LoadingProvider';
+import AuthProvider from './features/Todo/contexts/AuthProvider';
 
-function App (): JSX.Element {
+function App(): JSX.Element {
   return (
-    <LoadingProvider>
-      <FilterProvider>
-        <TodoProvider>
-          <AlertProvider>
-            <ModalProvider>
-              <Todo />
-            </ModalProvider>
-          </AlertProvider>
-        </TodoProvider>
-      </FilterProvider>
-    </LoadingProvider>
+    <AuthProvider>
+      <LoadingProvider>
+        <FilterProvider>
+          <TodoProvider>
+            <AlertProvider>
+              <ModalProvider>
+                <Todo />
+              </ModalProvider>
+            </AlertProvider>
+          </TodoProvider>
+        </FilterProvider>
+      </LoadingProvider>
+    </AuthProvider>
   );
 }
 

@@ -6,11 +6,13 @@ import { FILTER_CASE } from '../../../../helpers/enum/const';
 import ModalContext from '../../contexts/modal-context';
 import { Icons } from '../../../../helpers/Icons';
 import dayjs from 'dayjs';
+import AuthContext from '../../contexts/auth-context';
 
 const Filters = (): JSX.Element => {
   const { todo } = useContext(TodoContext);
   const { showAddModal } = useContext(ModalContext);
   const { setFilter } = useContext(FilterContext);
+  const { logOut } = useContext(AuthContext);
   const [currentActive, setCurrentActive] = useState(FILTER_CASE.showAll);
 
   const showModal = (): void => {
@@ -77,13 +79,22 @@ const Filters = (): JSX.Element => {
             </div>
           );
         })}
+        <div
+          className={`flex justify-content-center align-items-center ms-auto px-2 py-1 bg-white rounded-1 hover ${filterItem}`}
+          onClick={showModal}
+        >
+          <span className="sm-visible">Add To-do</span>
+          <span className="visible">+</span>
+        </div>
       </div>
       <div
         className={`flex justify-content-center align-items-center ms-auto px-2 py-1 bg-white rounded-1 hover ${filterItem}`}
-        onClick={showModal}
+        onClick={logOut}
       >
-        <span className="sm-visible">Add To-do</span>
-        <span className="visible">+</span>
+        <span className="sm-visible">Log out</span>
+        <span className="visible">
+          <Icons.LogOutMark />
+        </span>
       </div>
     </div>
   );

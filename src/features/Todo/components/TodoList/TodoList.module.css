@@ -1,7 +1,7 @@
 .todo-list-container {
   width: 100%;
   position: relative;
-  height: 350px;
+  height: 100%;
   overflow-y: hidden;
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;

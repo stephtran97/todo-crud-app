@@ -1,8 +1,16 @@
 .todo-container {
   width: 90%;
-  height: 500px;
+  height: 80vh;
   gap: 0.5rem;
   margin-left: auto;
   margin-right: auto;
   background-color: var(--secondary);
+}
+.form-container {
+  height: 20vh;
+}
+.form-container form {
+  width: 90%;
+  min-width: 150px;
+  max-width: 300px;
 }
