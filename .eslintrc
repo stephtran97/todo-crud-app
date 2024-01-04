@@ -3,7 +3,9 @@
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {
     "quotes": [2, "single"],
-    "react/jsx-uses-react": 2
+    "react/jsx-uses-react": 2,
+    "no-undef": "warn",
+    "no-undefined": "warn"
   },
   "parserOptions": {
     "ecmaVersion": 6,
