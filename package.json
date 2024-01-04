@@ -1,6 +1,7 @@
 {
   "name": "todo-crud-app",
   "version": "0.1.0",
+  "homepage": "https://stephtran97.github.io/todo-crud-app",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -12,6 +13,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -40,6 +43,7 @@
     "dayjs": "^1.11.10",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
+    "gh-pages": "^6.1.1",
     "react-datepicker": "^4.25.0",
     "typescript": "^5.3.3"
   }
