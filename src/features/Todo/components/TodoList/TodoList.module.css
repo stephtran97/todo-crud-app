@@ -1,0 +1,33 @@
+.todo-list-container {
+  width: 100%;
+  position: relative;
+  height: 350px;
+  overflow-y: hidden;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+.todo-list-header {
+  width: 100%;
+  gap: 0.25rem;
+}
+.sticky {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background-color: var(--primary);
+  color: var(--white);
+}
+.todo-list-header-title {
+  font-style: italic;
+}
+.todo-list-content {
+  font-size: 0.9rem;
+  overflow-y: scroll;
+  height: calc(100% - 26px);
+}
+@media (max-width: 480px) {
+  .todo-list-content {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
