@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/todo-crud-app/static/css/main.cd17c81c.css",
-    "main.js": "/todo-crud-app/static/js/main.a66c8fe9.js",
+    "main.css": "/todo-crud-app/static/css/main.a2f19fba.css",
+    "main.js": "/todo-crud-app/static/js/main.44d2a8df.js",
     "index.html": "/todo-crud-app/index.html",
-    "main.cd17c81c.css.map": "/todo-crud-app/static/css/main.cd17c81c.css.map",
-    "main.a66c8fe9.js.map": "/todo-crud-app/static/js/main.a66c8fe9.js.map"
+    "main.a2f19fba.css.map": "/todo-crud-app/static/css/main.a2f19fba.css.map",
+    "main.44d2a8df.js.map": "/todo-crud-app/static/js/main.44d2a8df.js.map"
   },
   "entrypoints": [
-    "static/css/main.cd17c81c.css",
-    "static/js/main.a66c8fe9.js"
+    "static/css/main.a2f19fba.css",
+    "static/js/main.44d2a8df.js"
   ]
 }
