@@ -2,13 +2,12 @@ import React, { useContext, useState } from 'react';
 import classes from './Filters.module.css';
 import TodoContext from '../../contexts/todo-context';
 import FilterContext from '../../contexts/filter-context';
-import { IFiltersProps } from '../../Todo.model';
 import { FILTER_CASE } from '../../../../helpers/enum/const';
 import ModalContext from '../../contexts/modal-context';
 import { Icons } from '../../../../helpers/Icons';
 import dayjs from 'dayjs';
 
-const Filters = (props: IFiltersProps): JSX.Element => {
+const Filters = (): JSX.Element => {
   const { todo } = useContext(TodoContext);
   const { showAddModal } = useContext(ModalContext);
   const { setFilter } = useContext(FilterContext);
