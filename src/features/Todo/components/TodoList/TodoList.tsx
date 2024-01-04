@@ -61,7 +61,7 @@ const TodoList = (): JSX.Element => {
           <span>Loading...</span>
         </div>
       ) : (
-        <div className={`px-1 ${todoListContent}`}>
+        <div className={`px-1 ${todoListContent} scroll`}>
           {todoList.length > 0 &&
             todoList.map((element: ITodoItem) => {
               return (

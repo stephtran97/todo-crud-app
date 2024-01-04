@@ -289,3 +289,22 @@ input:focus {
     display: none;
   }
 }
+
+/* Scroll bar style */
+::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background-color: var(--white);
+}
+.scroll::-webkit-scrollbar-track:hover {
+  background: #e9ecef;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
