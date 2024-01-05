@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import TodoContext from './todo-context';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import {
   addRemoteTodo,
   deleteRemoteTodo,
@@ -8,6 +7,23 @@ import {
 } from '../../../helpers/todo-api';
 import { ITodoItem } from '../Todo.model';
 import LoadingContext from './loading-context';
+
+type TodoContextActionType = {
+  addTodo: (todo: ITodoItem) => Promise<any>;
+  deleteTodo: (id: string) => void;
+  editTodo: (todo: ITodoItem) => void;
+};
+
+type TodoContextActionData = {
+  todo: ITodoItem[];
+};
+
+const TodoContextData = React.createContext<TodoContextActionData>(
+  {} as TodoContextActionData
+);
+const TodoContextAction = React.createContext<TodoContextActionType>(
+  {} as TodoContextActionType
+);
 
 const TodoProvider = (props: { children: React.ReactElement }): JSX.Element => {
   const [data, setData] = useState<ITodoItem[]>([]);
@@ -55,15 +71,25 @@ const TodoProvider = (props: { children: React.ReactElement }): JSX.Element => {
   };
 
   const todoCtx = {
-    todo: data,
-    addTodo: addTodoHandler,
-    editTodo: editTodoHandler,
-    deleteTodo: deleteTodoHandler
+    todo: data
   };
+  const todoActionValue = useMemo(() => {
+    return {
+      addTodo: addTodoHandler,
+      editTodo: editTodoHandler,
+      deleteTodo: deleteTodoHandler
+    };
+  }, []);
   return (
-    <TodoContext.Provider value={todoCtx}>
-      {props.children}
-    </TodoContext.Provider>
+    <TodoContextData.Provider value={todoCtx}>
+      <TodoContextAction.Provider value={todoActionValue}>
+        {props.children}
+      </TodoContextAction.Provider>
+    </TodoContextData.Provider>
   );
 };
+
+export const useTodoAction = () => useContext(TodoContextAction);
+export const useTodoData = () => useContext(TodoContextData);
+
 export default TodoProvider;

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import AlertContext from './alert-context';
-import TodoContext from './todo-context';
 import { IAlertContext, ITodoItem } from '../Todo.model';
 import { CONST_NUM } from '../../../helpers/enum/const';
 import dayjs from 'dayjs';
+import { useTodoAction, useTodoData } from './TodoProvider';
 
 const AlertProvider = (props: any): JSX.Element => {
-  const { todo } = useContext(TodoContext);
+  const { todo } = useTodoData();
 
   // Alert upcoming deadlines
   useEffect(() => {

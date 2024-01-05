@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import TodoContext from '../../contexts/todo-context';
 import TodoItem from '../TodoItem/TodoItem';
 import classes from './TodoList.module.css';
 import { ITodoItem } from '../../Todo.model';
@@ -8,9 +7,10 @@ import dayjs from 'dayjs';
 import LoadingContext from '../../contexts/loading-context';
 import LoaderSpin from '../../../../helpers/components/LoaderSpin/LoaderSpin';
 import { useFilter } from '../../contexts/FilterProvider';
+import { useTodoData } from '../../contexts/TodoProvider';
 
 const MainContent = () => {
-  const { todo } = useContext(TodoContext);
+  const { todo } = useTodoData();
   const { filter } = useFilter();
   const { isLoading } = useContext(LoadingContext);
 
@@ -59,18 +59,17 @@ const MainContent = () => {
   return (
     <>
       <div className={`px-1 ${classes['todo-list-content']}`}>
-        {todoList.length > 0 &&
-          todoList.map((element: ITodoItem) => {
-            return (
-              <TodoItem
-                key={element.id}
-                id={element.id}
-                content={element.content}
-                date={dayjs(element.date as any)}
-                isCompleted={element.isCompleted}
-              />
-            );
-          })}
+        {todoList.map((element: ITodoItem) => {
+          return (
+            <TodoItem
+              key={element.id}
+              id={element.id}
+              content={element.content}
+              date={element.date}
+              isCompleted={element.isCompleted}
+            />
+          );
+        })}
       </div>
     </>
   );

@@ -6,6 +6,7 @@ const ModalProvider = (props: any): JSX.Element => {
   const [modalInput, setModalInput] = useState<any>();
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  console.log('modal');
 
   const showAddModal = (todo: ITodoItem): void => {
     setIsAdding(true);

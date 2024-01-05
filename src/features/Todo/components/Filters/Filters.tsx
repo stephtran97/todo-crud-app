@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classes from './Filters.module.css';
-import TodoContext from '../../contexts/todo-context';
 import ModalContext from '../../contexts/modal-context';
 import { Icons } from '../../../../helpers/Icons';
 import dayjs from 'dayjs';
 import { useFilter, useFilterAction } from '../../contexts/FilterProvider';
+import { useTodoData } from '../../contexts/TodoProvider';
 
 type FilterButtonProps = {
   name: string;
@@ -44,7 +44,7 @@ const FilterButton = ({
 };
 
 const ListButtonFilter = () => {
-  const { todo } = useContext(TodoContext);
+  const { todo } = useTodoData();
   const { filter } = useFilter();
   const { setFilter } = useFilterAction();
 

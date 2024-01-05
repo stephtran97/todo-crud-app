@@ -4,13 +4,13 @@ import Filters from './components/Filters/Filters';
 import TodoList from './components/TodoList/TodoList';
 import Modal from '../../helpers/components/Modal/Modal';
 import ModalContext from './contexts/modal-context';
-import TodoContext from './contexts/todo-context';
+import { useTodoAction } from './contexts/TodoProvider';
 
 // This component will take the responsibility to render the modal content
 const TodoModal = () => {
   const { isAdding, isEditing, modalInput, hideModal } =
     useContext(ModalContext);
-  const { addTodo, editTodo } = useContext(TodoContext);
+  const { addTodo, editTodo } = useTodoAction();
   return (
     <>
       {/* {isAdding && (
