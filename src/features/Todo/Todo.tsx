@@ -6,10 +6,33 @@ import Modal from '../../helpers/components/Modal/Modal';
 import ModalContext from './contexts/modal-context';
 import TodoContext from './contexts/todo-context';
 
-const Todo = (): JSX.Element => {
+// This component will take the responsibility to render the modal content
+const TodoModal = () => {
   const { isAdding, isEditing, modalInput, hideModal } =
     useContext(ModalContext);
   const { addTodo, editTodo } = useContext(TodoContext);
+  return (
+    <>
+      {/* {isAdding && (
+        <Modal input={modalInput} action={addTodo} onHideModal={hideModal} />
+      )}
+      {isEditing && (
+        <Modal input={modalInput} action={editTodo} onHideModal={hideModal} />
+      )} */}
+
+      {/* If i design this modal, I will use display: none instead of re-mounting the modal component  */}
+      {(isAdding || isEditing) && (
+        <Modal
+          input={modalInput}
+          action={isAdding ? addTodo : editTodo}
+          onHideModal={hideModal}
+        />
+      )}
+    </>
+  );
+};
+
+const Todo = (): JSX.Element => {
   const { 'todo-container': todoContainer } = classes;
   return (
     <div
@@ -20,13 +43,8 @@ const Todo = (): JSX.Element => {
       </div>
       <Filters />
       <TodoList />
-      {/* eslint-disable */}
-      {isAdding && (
-        <Modal input={modalInput} action={addTodo} onHideModal={hideModal} />
-      )}
-      {isEditing && (
-        <Modal input={modalInput} action={editTodo} onHideModal={hideModal} />
-      )}
+      {/* I would like to split this part into another component */}
+      <TodoModal />
     </div>
   );
 };
