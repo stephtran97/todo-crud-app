@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classes from './Filters.module.css';
 import TodoContext from '../../contexts/todo-context';
-import FilterContext from '../../contexts/filter-context';
-import { FILTER_CASE } from '../../../../helpers/enum/const';
 import ModalContext from '../../contexts/modal-context';
 import { Icons } from '../../../../helpers/Icons';
 import dayjs from 'dayjs';
+import { useFilter, useFilterAction } from '../../contexts/FilterProvider';
 
 type FilterButtonProps = {
   name: string;
@@ -46,30 +45,31 @@ const FilterButton = ({
 
 const ListButtonFilter = () => {
   const { todo } = useContext(TodoContext);
-  const { setFilter, filter } = useContext(FilterContext);
+  const { filter } = useFilter();
+  const { setFilter } = useFilterAction();
 
   return (
     <>
       <FilterButton
         name="All"
-        onClick={() => setFilter(FILTER_CASE.showAll)}
+        onClick={() => setFilter('all')}
         icon={<Icons.AllTodosMark />}
         quantityOfItem={todo.length}
-        isActive={filter == FILTER_CASE.showAll}
+        isActive={filter === 'all'}
       />
       <FilterButton
         name="Active"
-        onClick={() => setFilter(FILTER_CASE.showActive)}
+        onClick={() => setFilter('active')}
         icon={<Icons.ActiveTodosMark />}
         quantityOfItem={todo.filter((item) => !item.isCompleted).length}
-        isActive={filter == FILTER_CASE.showActive}
+        isActive={filter === 'active'}
       />
       <FilterButton
         name="Completed"
-        onClick={() => setFilter(FILTER_CASE.showCompleted)}
+        onClick={() => setFilter('completed')}
         icon={<Icons.CompletedTodosMark />}
         quantityOfItem={todo.filter((item) => item.isCompleted).length}
-        isActive={filter == FILTER_CASE.showCompleted}
+        isActive={filter === 'completed'}
       />
     </>
   );

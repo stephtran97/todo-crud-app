@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
-import FilterContext from './filter-context';
-import { FILTER_CASE } from '../../../helpers/enum/const';
+import React, { useContext, useMemo, useState } from 'react';
+
+export type FilterStateType = 'all' | 'completed' | 'active';
+
+const FilterContextData = React.createContext<{ filter: FilterStateType }>({
+  filter: 'all'
+});
+const FilterContextAction = React.createContext<{
+  setFilter: React.Dispatch<React.SetStateAction<FilterStateType>>;
+}>({ setFilter: () => {} });
 
 const FilterProvider = (props: any): JSX.Element => {
-  const [filterState, setFilterState] = useState(FILTER_CASE.showAll);
-  const filterStateHandler = (todoType: number): void => {
-    setFilterState(todoType);
-  };
-  const filterCtx = { filter: filterState, setFilter: filterStateHandler };
+  const [filter, setFilter] = useState<FilterStateType>('all');
+  const actionValue = useMemo(() => {
+    return {
+      setFilter
+    };
+  }, []);
   return (
-    <FilterContext.Provider value={filterCtx}>
-      {props.children}
-    </FilterContext.Provider>
+    <FilterContextData.Provider value={{ filter }}>
+      <FilterContextAction.Provider value={actionValue}>
+        {props.children}
+      </FilterContextAction.Provider>
+    </FilterContextData.Provider>
   );
 };
+
+export const useFilter = () => useContext(FilterContextData);
+export const useFilterAction = () => useContext(FilterContextAction);
 
 export default FilterProvider;

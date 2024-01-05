@@ -8,8 +8,8 @@ import {
 } from '../../../helpers/todo-api';
 import { ITodoItem } from '../Todo.model';
 import LoadingContext from './loading-context';
-/* eslint-disable */
-const TodoProvider = (props): JSX.Element => {
+
+const TodoProvider = (props: { children: React.ReactElement }): JSX.Element => {
   const [data, setData] = useState<ITodoItem[]>([]);
   const { setIsLoading } = useContext(LoadingContext);
   const fetch = async () => {

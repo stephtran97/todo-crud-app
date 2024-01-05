@@ -2,16 +2,16 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import TodoContext from '../../contexts/todo-context';
 import TodoItem from '../TodoItem/TodoItem';
 import classes from './TodoList.module.css';
-import FilterContext from '../../contexts/filter-context';
 import { ITodoItem } from '../../Todo.model';
 import { FILTER_CASE } from '../../../../helpers/enum/const';
 import dayjs from 'dayjs';
 import LoadingContext from '../../contexts/loading-context';
 import LoaderSpin from '../../../../helpers/components/LoaderSpin/LoaderSpin';
+import { useFilter } from '../../contexts/FilterProvider';
 
 const MainContent = () => {
   const { todo } = useContext(TodoContext);
-  const { filter } = useContext(FilterContext);
+  const { filter } = useFilter();
   const { isLoading } = useContext(LoadingContext);
 
   // Duplicate state. You just need extract the todo item with your filter
@@ -34,10 +34,10 @@ const MainContent = () => {
   // }, [filter, todo]);
 
   const todoList = useMemo(() => {
-    if (filter === FILTER_CASE.showCompleted) {
+    if (filter === 'completed') {
       return todo.filter((item) => item.isCompleted);
     }
-    if (filter === FILTER_CASE.showActive) {
+    if (filter === 'active') {
       return todo.filter((item) => !item.isCompleted);
     }
     return todo;
