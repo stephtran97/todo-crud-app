@@ -1,82 +1,95 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classes from './Filters.module.css';
-import TodoContext from '../../contexts/todo-context';
-import FilterContext from '../../contexts/filter-context';
-import { FILTER_CASE } from '../../../../helpers/enum/const';
 import ModalContext from '../../contexts/modal-context';
 import { Icons } from '../../../../helpers/Icons';
 import dayjs from 'dayjs';
+import { useFilter, useFilterAction } from '../../contexts/FilterProvider';
+import { useTodoData } from '../../contexts/TodoProvider';
+
+type FilterButtonProps = {
+  name: string;
+  onClick: () => void;
+  isActive: boolean;
+  icon: React.ReactElement;
+  quantityOfItem: number;
+};
+
+const FilterButton = ({
+  name,
+  onClick,
+  isActive,
+  icon,
+  quantityOfItem
+}: FilterButtonProps) => {
+  return (
+    <div
+      className={`relative flex justify-content-center align-items-center px-2 py-1 me-1 bg-white rounded-1 hover ${
+        classes['filter-item']
+      } ${isActive ? 'active' : ''}`}
+      onClick={onClick}
+    >
+      <span className="sm-visible">{name}</span>
+      <span className="flex justify-content-center align-items-center visible">
+        {icon}
+      </span>
+      <span
+        className={`ms-1 ${classes['item-counter']} ${
+          isActive ? classes['item-counter--active'] : ''
+        }`}
+      >
+        {quantityOfItem}
+      </span>
+    </div>
+  );
+};
+
+const ListButtonFilter = () => {
+  const { todo } = useTodoData();
+  const { filter } = useFilter();
+  const { setFilter } = useFilterAction();
+
+  return (
+    <>
+      <FilterButton
+        name="All"
+        onClick={() => setFilter('all')}
+        icon={<Icons.AllTodosMark />}
+        quantityOfItem={todo.length}
+        isActive={filter === 'all'}
+      />
+      <FilterButton
+        name="Active"
+        onClick={() => setFilter('active')}
+        icon={<Icons.ActiveTodosMark />}
+        quantityOfItem={todo.filter((item) => !item.isCompleted).length}
+        isActive={filter === 'active'}
+      />
+      <FilterButton
+        name="Completed"
+        onClick={() => setFilter('completed')}
+        icon={<Icons.CompletedTodosMark />}
+        quantityOfItem={todo.filter((item) => item.isCompleted).length}
+        isActive={filter === 'completed'}
+      />
+    </>
+  );
+};
 
 const Filters = (): JSX.Element => {
-  const { todo } = useContext(TodoContext);
   const { showAddModal } = useContext(ModalContext);
-  const { setFilter } = useContext(FilterContext);
-  const [currentActive, setCurrentActive] = useState(FILTER_CASE.showAll);
 
   const showModal = (): void => {
     showAddModal({ content: '', date: dayjs(), isCompleted: false });
   };
-  const filterHandler = (todoType: number): void => {
-    setCurrentActive(todoType);
-    setFilter(todoType);
-  };
-  const filterButtons = [
-    {
-      filterHandler: () => filterHandler(FILTER_CASE.showAll),
-      isActive: currentActive === FILTER_CASE.showAll,
-      btnName: 'All',
-      btnIcon: <Icons.AllTodosMark />,
-      quantityOfItem: todo.length
-    },
-    {
-      filterHandler: () => filterHandler(FILTER_CASE.showActive),
-      isActive: currentActive === FILTER_CASE.showActive,
-      btnName: 'Active',
-      btnIcon: <Icons.ActiveTodosMark />,
-      quantityOfItem: todo.filter((item) => item.isCompleted === false).length
-    },
-    {
-      filterHandler: () => filterHandler(FILTER_CASE.showCompleted),
-      isActive: currentActive === FILTER_CASE.showCompleted,
-      btnName: 'Completed',
-      btnIcon: <Icons.CompletedTodosMark />,
-      quantityOfItem: todo.filter((item) => item.isCompleted === true).length
-    }
-  ];
-  const {
-    'filter-container': filterContainer,
-    'filter-item': filterItem,
-    'item-counter': itemCounter,
-    'item-counter--active': itemCounterActive
-  } = classes;
+
+  const { 'filter-container': filterContainer, 'filter-item': filterItem } =
+    classes;
   return (
     <div
       className={`${filterContainer} flex justify-content-between align-items-center mb-1`}
     >
       <div className="flex">
-        {filterButtons.map((button, index) => {
-          return (
-            <div
-              key={index}
-              className={`relative flex justify-content-center align-items-center px-2 py-1 me-1 bg-white rounded-1 hover ${filterItem} ${
-                button.isActive ? 'active' : ''
-              }`}
-              onClick={button.filterHandler}
-            >
-              <span className="sm-visible">{button.btnName}</span>
-              <span className="flex justify-content-center align-items-center visible">
-                {button.btnIcon}
-              </span>
-              <span
-                className={`ms-1 ${itemCounter} ${
-                  button.isActive ? itemCounterActive : ''
-                }`}
-              >
-                {button.quantityOfItem}
-              </span>
-            </div>
-          );
-        })}
+        <ListButtonFilter />
       </div>
       <div
         className={`flex justify-content-center align-items-center ms-auto px-2 py-1 bg-white rounded-1 hover ${filterItem}`}

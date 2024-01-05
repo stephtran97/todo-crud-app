@@ -1,30 +1,31 @@
-import React, { useContext } from 'react';
+import React, { memo, useContext } from 'react';
 import classes from './TodoItem.module.css';
 import Button from '../../../../helpers/components/Button/Button';
 import { ITodoItem } from '../../Todo.model';
-import TodoContext from '../../contexts/todo-context';
 import { Icons } from '../../../../helpers/Icons';
 import { toDDMMYYYY } from '../../../../helpers/helper-functions';
 import ModalContext from '../../contexts/modal-context';
+import { useTodoAction } from '../../contexts/TodoProvider';
 
 const TodoItem = (props: ITodoItem): JSX.Element => {
   const { id, date, content, isCompleted } = props;
-  const { editTodo, deleteTodo } = useContext(TodoContext);
+  const { editTodo, deleteTodo } = useTodoAction();
   const { showEditModal } = useContext(ModalContext);
 
   const showModal = (): void => {
     showEditModal({ id, content, date, isCompleted });
   };
+
   const toggleCompleteHandler = (): void => {
     editTodo({
       id,
       content,
       date,
-      isCompleted: isCompleted === false
+      isCompleted: !isCompleted
     });
   };
   const deleteHandler = (): void => {
-    deleteTodo(id);
+    deleteTodo(id || '');
   };
 
   const {
@@ -43,13 +44,9 @@ const TodoItem = (props: ITodoItem): JSX.Element => {
           onChange={toggleCompleteHandler}
         />
       </span>
-      <span
-        className={`column-2 text-left ${
-          isCompleted === true ? completed : ''
-        }`}
-      >
+      <span className={`column-2 text-left ${isCompleted ? completed : ''}`}>
         {content}
-        {isCompleted === true && (
+        {isCompleted && (
           <span className="ms-1">
             <Icons.TickIcon />
           </span>
@@ -58,7 +55,7 @@ const TodoItem = (props: ITodoItem): JSX.Element => {
 
       <span
         className={`column-3 flex-shrink-0 text-right ms-auto relative ${todoItemDate} ${
-          isCompleted === true ? completed : ''
+          isCompleted ? completed : ''
         }`}
       >
         <span id={id} className={`${upcomingMark} hidden`}>
@@ -81,4 +78,4 @@ const TodoItem = (props: ITodoItem): JSX.Element => {
     </div>
   );
 };
-export default TodoItem;
+export default memo(TodoItem);

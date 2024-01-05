@@ -7,7 +7,7 @@ import AlertProvider from './features/Todo/contexts/AlertProvider';
 import ModalProvider from './features/Todo/contexts/ModalProvider';
 import LoadingProvider from './features/Todo/contexts/LoadingProvider';
 
-function App (): JSX.Element {
+function App(): JSX.Element {
   return (
     <LoadingProvider>
       <FilterProvider>
