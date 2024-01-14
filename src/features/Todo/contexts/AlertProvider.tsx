@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AlertContext from './alert-context';
-import TodoContext from './todo-context';
 import { IAlertContext, ITodoItem } from '../Todo.model';
 import { CONST_NUM } from '../../../helpers/enum/const';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 
 const AlertProvider = (props: any): JSX.Element => {
-  const { todo } = useContext(TodoContext);
-
+  // @ts-expect-error test
+  const todo = useSelector((state) => state.todo.todo);
   // Alert upcoming deadlines
   useEffect(() => {
     // Alert Interval

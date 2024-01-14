@@ -1,18 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react';
-import TodoContext from '../../contexts/todo-context';
 import TodoItem from '../TodoItem/TodoItem';
 import classes from './TodoList.module.css';
 import FilterContext from '../../contexts/filter-context';
 import { ITodoItem } from '../../Todo.model';
 import { FILTER_CASE } from '../../../../helpers/enum/const';
 import dayjs from 'dayjs';
-import LoadingContext from '../../contexts/loading-context';
 import LoaderSpin from '../../../../helpers/components/LoaderSpin/LoaderSpin';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTodoItems } from '../../../../store/slice/todo-slice';
+
 const TodoList = (): JSX.Element => {
-  const { todo } = useContext(TodoContext);
+  // @ts-expect-error test
+  const todo = useSelector((state) => state.todo.todo);
+  // @ts-expect-error test
+  const isLoading = useSelector((state) => state.todo.isLoading);
+  const dispatch = useDispatch();
+
   const { filter } = useContext(FilterContext);
   const [todoList, setTodoList] = useState<ITodoItem[] | undefined>(todo);
-  const { isLoading } = useContext(LoadingContext);
+
+  useEffect(() => {
+    // @ts-expect-error test
+    dispatch(fetchTodoItems());
+  }, []);
+
   useEffect(() => {
     const filteredList = (): ITodoItem[] | undefined => {
       /* eslint-disable */

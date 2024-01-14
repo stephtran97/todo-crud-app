@@ -4,12 +4,23 @@ import Filters from './components/Filters/Filters';
 import TodoList from './components/TodoList/TodoList';
 import Modal from '../../helpers/components/Modal/Modal';
 import ModalContext from './contexts/modal-context';
-import TodoContext from './contexts/todo-context';
+import { useDispatch } from 'react-redux';
+import { addTodoItem, editTodoItem } from '../../store/slice/todo-slice';
 
 const Todo = (): JSX.Element => {
   const { isAdding, isEditing, modalInput, hideModal } =
     useContext(ModalContext);
-  const { addTodo, editTodo } = useContext(TodoContext);
+  const dispatch = useDispatch();
+
+  const addTodoHandler = (todo) => {
+    // @ts-expect-error test
+    dispatch(addTodoItem(todo));
+  };
+
+  const editTodoHandler = (todo) => {
+    // @ts-expect-error test
+    dispatch(editTodoItem(todo));
+  };
   const { 'todo-container': todoContainer } = classes;
   return (
     <div
@@ -22,10 +33,18 @@ const Todo = (): JSX.Element => {
       <TodoList />
       {/* eslint-disable */}
       {isAdding && (
-        <Modal input={modalInput} action={addTodo} onHideModal={hideModal} />
+        <Modal
+          input={modalInput}
+          action={addTodoHandler}
+          onHideModal={hideModal}
+        />
       )}
       {isEditing && (
-        <Modal input={modalInput} action={editTodo} onHideModal={hideModal} />
+        <Modal
+          input={modalInput}
+          action={editTodoHandler}
+          onHideModal={hideModal}
+        />
       )}
     </div>
   );

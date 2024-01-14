@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react';
 import classes from './Filters.module.css';
-import TodoContext from '../../contexts/todo-context';
 import FilterContext from '../../contexts/filter-context';
 import { FILTER_CASE } from '../../../../helpers/enum/const';
 import ModalContext from '../../contexts/modal-context';
 import { Icons } from '../../../../helpers/Icons';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 
 const Filters = (): JSX.Element => {
-  const { todo } = useContext(TodoContext);
+  // @ts-expect-error test
+  const todo = useSelector((state) => state.todo.todo);
   const { showAddModal } = useContext(ModalContext);
   const { setFilter } = useContext(FilterContext);
   const [currentActive, setCurrentActive] = useState(FILTER_CASE.showAll);

@@ -2,29 +2,36 @@ import React, { useContext } from 'react';
 import classes from './TodoItem.module.css';
 import Button from '../../../../helpers/components/Button/Button';
 import { ITodoItem } from '../../Todo.model';
-import TodoContext from '../../contexts/todo-context';
 import { Icons } from '../../../../helpers/Icons';
 import { toDDMMYYYY } from '../../../../helpers/helper-functions';
 import ModalContext from '../../contexts/modal-context';
+import { useDispatch } from 'react-redux';
+import {
+  deleteTodoItem,
+  editTodoItem
+} from '../../../../store/slice/todo-slice';
 
 const TodoItem = (props: ITodoItem): JSX.Element => {
   const { id, date, content, isCompleted } = props;
-  const { editTodo, deleteTodo } = useContext(TodoContext);
   const { showEditModal } = useContext(ModalContext);
-
+  const dispatch = useDispatch();
   const showModal = (): void => {
     showEditModal({ id, content, date, isCompleted });
   };
   const toggleCompleteHandler = (): void => {
-    editTodo({
-      id,
-      content,
-      date,
-      isCompleted: isCompleted === false
-    });
+    dispatch(
+      // @ts-expect-error test
+      editTodoItem({
+        id,
+        content,
+        date,
+        isCompleted: isCompleted === false
+      })
+    );
   };
   const deleteHandler = (): void => {
-    deleteTodo(id);
+    // @ts-expect-error test
+    dispatch(deleteTodoItem(id));
   };
 
   const {
